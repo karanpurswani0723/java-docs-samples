@@ -16,7 +16,7 @@
 #
 # This sample has manual_scaling set to 1.
 #
-service: alphahex
+service: alphahexs
 runtime: java
 env: flex
 
