@@ -1,4 +1,4 @@
-package com.example.java;
+package com.example.java.controller;
 
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
