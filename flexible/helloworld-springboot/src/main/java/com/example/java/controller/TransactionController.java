@@ -73,8 +73,10 @@ public class TransactionController {
     public static boolean isAngryGCS() throws IOException {
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
-        String gcsPath = "gs://gcp-hackathon-demo-project/657575.jpg";
+       // String gcsPath = "gs://gcp-hackathon-demo-project/657575.jpg";
         //String gcsPath = "gs://gcp-hackathon-demo-project/angry.jpeg";
+        String gcsPath = "gs://alphahex-hackathon-bucket/657575.jpg";
+
 
         ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(gcsPath).build();
         Image img = Image.newBuilder().setSource(imgSource).build();
