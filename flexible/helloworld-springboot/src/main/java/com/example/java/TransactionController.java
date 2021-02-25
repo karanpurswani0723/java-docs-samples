@@ -2,11 +2,7 @@ package com.example.java;
 
 import com.google.cloud.vision.v1.*;
 import com.google.protobuf.ByteString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,13 +14,18 @@ import java.util.List;
 @RestController
 public class TransactionController {
 
-    @Autowired
+
     TransactionServiceImpl transactionService;
 
     @RequestMapping(method = RequestMethod.GET, path = "getData")
     public String getData() {
         System.out.println("test");
         return "s";
+    }
+
+    @GetMapping(value = "/liveness")
+    public String liveness(){
+        return "OK";
     }
 
     @RequestMapping(value = "/createTransaction", method = RequestMethod.POST)
