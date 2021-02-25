@@ -1,6 +1,7 @@
 package com.example.java.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,35 +11,35 @@ import java.util.List;
 public class TransactionServiceImpl implements TransactionService {
 
 
-    /*@Autowired
-    TransactionRepository transactionRepository;*/
+   @Autowired
+    TransactionRepository transactionRepository;
 
 
     @Override
     public void create(Transaction transaction) {
 
-        //Transaction transaction1=transactionRepository.insert(transaction);
+        Transaction transaction1=transactionRepository.save(transaction);
         System.out.println("transaction created---");
 
     }
 
     @Override
     public void update(Transaction transaction) {
-        //Transaction transaction1 = transactionRepository.save(transaction);
+        Transaction transaction1 = transactionRepository.save(transaction);
         System.out.println("Updated:- " );
 
     }
 
     @Override
     public void delete(Transaction transaction) {
-        //transactionRepository.delete(transaction);
-        System.out.println("Deleted:- " + transaction.getAccountNumber());
+        transactionRepository.delete(transaction);
+        //System.out.println("Deleted:- " + transaction.getAccountNumber());
 
     }
 
     @Override
     public void deleteAll() {
-      //  transactionRepository.deleteAll();
+       transactionRepository.deleteAll();
 
     }
 
@@ -49,14 +50,18 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> findByAccountNumber(String accountNumber) {
-        return new ArrayList<>();
-               // transactionRepository.findByAccountNumber(accountNumber);
+
+        return
+               // new ArrayList<>();
+                transactionRepository.findByAccountNumber(accountNumber);
     }
 
     @Override
     public List<Transaction> findAll() {
-        return
-                new ArrayList<>();
-                //transactionRepository.findAll();
+        List<Transaction> result = new ArrayList<Transaction>();
+        transactionRepository.findAll().forEach(result::add);
+                //new ArrayList<>();
+        return result;
+
     }
 }

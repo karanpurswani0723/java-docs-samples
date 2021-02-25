@@ -1,16 +1,22 @@
 package com.example.java.controller;
 
+import javax.persistence.*;
+import javax.persistence.Entity;
 
+@Entity(name = "transaction")
+//@Table(name = "transaction")
 public class Transaction {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long transactionId;
 
     private String accountNumber;
     private double Balance;
     private double creditDebitAmount;
     private String transactionType;
-    private double transactionId;
     private String date;
-    private String description;
-    private String category;
 
 
     public double getBalance() {
@@ -37,11 +43,11 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public double getTransactionId() {
+    public Long getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(double transactionId) {
+    public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -61,19 +67,5 @@ public class Transaction {
         this.accountNumber = accountNumber;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 }
