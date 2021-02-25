@@ -27,9 +27,6 @@ handlers:
   - url: /.*
     script: this field is required, but ignored
 
-manual_scaling:
-  instances: 1
-
 liveness_check:
   path: "/liveness"
   check_interval_sec: 250
