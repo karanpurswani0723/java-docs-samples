@@ -15,6 +15,6 @@ steps:
     dir: 'helloworld-springboot'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy src/main/appengine/app.yaml']
+    args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy app.yaml']
     dir: 'helloworld-springboot'
 timeout: '1600s'
