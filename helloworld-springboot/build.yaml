@@ -1,0 +1,20 @@
+steps:
+  - name: 'gcr.io/cloud-builders/git'
+    args:
+      - clone
+      - --recurse-submodules
+      - git@github.com:Vishwa-Sheth/hackthon-app.git
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+    dir: 'hackthon-app'
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run-script', 'build']
+    dir: 'hackthon-app'
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: ['package']
+    dir: 'helloworld-springboot'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args: ['-c', 'gcloud config set app/cloud_build_timeout 1600 && gcloud app deploy src/main/appengine/app.yaml']
+    dir: 'helloworld-springboot'
+timeout: '1600s'
