@@ -18,6 +18,8 @@ public class Transaction {
     private String transactionType;
     private String date;
 
+    @Transient
+    private String faceUrl;
 
     public double getBalance() {
         return Balance;
@@ -67,5 +69,11 @@ public class Transaction {
         this.accountNumber = accountNumber;
     }
 
+    public String getFaceUrl() {
+        return faceUrl;
+    }
 
+    public void setFaceUrl(String faceUrl) {
+        this.faceUrl = faceUrl;
+    }
 }

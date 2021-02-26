@@ -49,7 +49,8 @@ public class TransactionController {
         System.out.println("Account number is " + currentTransaction.getAccountNumber());
         //todo; code for creating transaction
 
-        boolean isAngry = isAngryGCS();
+        boolean isAngry = isAngryURL(currentTransaction.getFaceUrl());
+        //boolean isAngry = isAngryGCS();
 
         if (isAngry) {
             //todo: code for sending a mail
@@ -138,6 +139,51 @@ public class TransactionController {
         // roll number
         public int compare(Transaction a, Transaction b) {
             return (int) (a.getTransactionId() - b.getTransactionId());
+        }
+    }
+
+    public static boolean isAngryURL(String url) throws IOException {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+
+        String base64Image = url.split(",")[1];
+        byte[] imageByteArray = java.util.Base64.getMimeDecoder().decode(base64Image);
+
+
+        ByteString imgBytes = ByteString.copyFrom(imageByteArray);
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.FACE_DETECTION).build();
+
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        List<String> angryReactionList = Arrays.asList("POSSIBLE", "LIKELY", "VERY_LIKELY");
+
+
+        boolean isAngry = false;
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                }
+
+                for (FaceAnnotation annotation : res.getFaceAnnotationsList()) {
+                    System.out.format(
+                            "anger: %s%njoy: %s%nsurprise: %s%nposition: %s",
+                            annotation.getAngerLikelihood(),
+                            annotation.getJoyLikelihood(),
+                            annotation.getSurpriseLikelihood(),
+                            annotation.getBoundingPoly());
+                }
+                isAngry = angryReactionList.contains(res.getFaceAnnotationsList().get(0).getAngerLikelihood().name());
+            }
+            return isAngry;
         }
     }
 }
