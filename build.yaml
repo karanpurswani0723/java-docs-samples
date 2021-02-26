@@ -3,7 +3,7 @@ steps:
     args:
       - clone
       - --recurse-submodules
-      - git@github.com:Vishwa-Sheth/hackthon-app.git
+      - https://github.com/Vishwa-Sheth/hackthon-app.git
   - name: 'gcr.io/cloud-builders/npm'
     args: ['install']
     dir: 'hackthon-app'
